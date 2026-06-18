@@ -1,5 +1,7 @@
 # Digital Health Check
 
+> **This is the standalone Presence module from [Main Street AI](https://github.com/colbysmithcode/main-street-ai)** — a free, open-source AI platform built for nonprofits and small businesses. Fork this repo if you just want the audit tool. Visit Main Street AI for the full platform: grant writing, donor letters, volunteer coordination, impact reporting, and more.
+
 **A free digital presence audit for small businesses, nonprofits, and community organizations who can't afford an agency.**
 
 Getting an honest assessment of your organization's online presence normally costs hundreds of dollars or requires knowing someone in marketing. This tool makes that assessment free and instant — no signup, no sales call, no catch.
@@ -53,7 +55,7 @@ Nothing you submit is saved. Results are generated fresh each time.
 This runs entirely on Cloudflare's free tier. You need a Cloudflare account and an Anthropic API key.
 
 ```bash
-git clone https://github.com/colbysmith/community-digital-health-check
+git clone https://github.com/colbysmithcode/community-digital-health-check
 cd community-digital-health-check/worker
 npm install
 wrangler secret put ANTHROPIC_API_KEY
