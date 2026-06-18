@@ -10,5 +10,29 @@
       "Bash(rm -rf*)",
       "Bash(curl * | bash*)"
     ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -q 'wrangler deploy'; then echo '⚠️  After deploying worker, update WORKER_URL constant in frontend/index.html with the new worker URL.'; fi"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -q 'SYSTEM_PROMPT'; then echo '✓ System prompt edited. Test with: wrangler dev, then POST /audit with a test org before deploying.'; fi"
+          }
+        ]
+      }
+    ]
   }
 }

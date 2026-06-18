@@ -1,0 +1,17 @@
+{
+  "name": "community-digital-health-check-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for the Community Digital Health Check — run test audits, health checks, and review the system prompt",
+  "type": "module",
+  "main": "server.js",
+  "bin": {
+    "community-health-mcp": "server.js"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node server.js --test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  }
+}
