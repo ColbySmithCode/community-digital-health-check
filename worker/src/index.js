@@ -83,17 +83,18 @@ export default {
       return new Response(null, { headers: CORS_HEADERS });
     }
 
-    if (request.method !== 'POST') {
-      return new Response(JSON.stringify({ error: 'POST only' }), {
-        status: 405,
+    const url = new URL(request.url);
+
+    // Health check is a GET — must be handled before the POST-only guard.
+    if (url.pathname === '/health') {
+      return new Response(JSON.stringify({ status: 'ok' }), {
         headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
       });
     }
 
-    const url = new URL(request.url);
-
-    if (url.pathname === '/health') {
-      return new Response(JSON.stringify({ status: 'ok' }), {
+    if (request.method !== 'POST') {
+      return new Response(JSON.stringify({ error: 'POST only' }), {
+        status: 405,
         headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
       });
     }
