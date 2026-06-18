@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Health Check — Free Audit for Small Businesses & Nonprofits</title>
+  <meta name="description" content="Get a free, instant digital presence audit for your organization. No signup required. Built for nonprofits and small businesses who can't afford an agency." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3a;
+      --text: #e8eaf0;
+      --muted: #7c8096;
+      --accent: #6366f1;
+      --accent-light: #818cf8;
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --red: #f87171;
+      --orange: #fb923c;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .logo-dot {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .logo-text { font-weight: 700; font-size: 15px; }
+    .logo-sub { font-size: 13px; color: var(--muted); margin-left: auto; }
+
+    /* HERO */
+    .hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(99,102,241,.12);
+      border: 1px solid rgba(99,102,241,.25);
+      color: var(--accent-light);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      letter-spacing: -.02em;
+    }
+    h1 span { color: var(--accent-light); }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    /* FORM */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 560px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .form-row { display: flex; gap: 12px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .form-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s;
+    }
+    .form-input::placeholder { color: #454960; }
+    .form-input:focus { border-color: var(--accent); }
+    .form-select {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+      transition: border-color .15s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237c8096' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+    .form-select:focus { border-color: var(--accent); }
+    .form-select option { background: #1a1d27; }
+    .submit-btn {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s, opacity .15s;
+      margin-top: 16px;
+    }
+    .submit-btn:hover { background: #5558e8; }
+    .submit-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .form-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+    .form-error {
+      display: none;
+      background: rgba(248,113,113,.08);
+      border: 1px solid rgba(248,113,113,.2);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-size: 13px;
+      color: var(--red);
+      margin-top: 12px;
+    }
+    .form-error.show { display: block; }
+
+    /* LOADING */
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 48px 24px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .loading.show { display: block; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .9s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 15px; color: var(--muted); }
+    .loading-sub { font-size: 13px; color: #454960; margin-top: 6px; }
+
+    /* RESULTS */
+    #results { display: none; max-width: 760px; margin: 0 auto; padding: 0 24px 80px; }
+    #results.show { display: block; }
+
+    .result-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .result-org { font-weight: 700; font-size: 22px; line-height: 1.2; }
+    .result-city { font-size: 14px; color: var(--muted); margin-top: 4px; }
+    .result-summary { font-size: 14px; color: rgba(232,234,240,.7); margin-top: 10px; line-height: 1.6; max-width: 480px; }
+    .grade-badge {
+      flex-shrink: 0;
+      width: 64px; height: 64px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 32px;
+      font-family: 'Inter', sans-serif;
+    }
+    .grade-A { background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.3); color: var(--green); }
+    .grade-B { background: rgba(99,102,241,.12); border: 1px solid rgba(99,102,241,.3); color: var(--accent-light); }
+    .grade-C { background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.25); color: var(--yellow); }
+    .grade-D { background: rgba(251,146,60,.1); border: 1px solid rgba(251,146,60,.25); color: var(--orange); }
+    .grade-F { background: rgba(248,113,113,.1); border: 1px solid rgba(248,113,113,.25); color: var(--red); }
+
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .section-head {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-icon { font-size: 16px; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+    }
+    .section-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; }
+
+    .win-card {
+      background: rgba(52,211,153,.04);
+      border: 1px solid rgba(52,211,153,.15);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .win-action { font-weight: 600; font-size: 14px; color: var(--green); margin-bottom: 6px; }
+    .win-why { font-size: 13px; color: rgba(232,234,240,.75); line-height: 1.6; }
+    .win-meta { display: flex; gap: 10px; margin-top: 10px; }
+    .win-pill {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: rgba(52,211,153,.1);
+      color: var(--green);
+      border: 1px solid rgba(52,211,153,.2);
+    }
+    .win-pill.time { background: rgba(99,102,241,.1); color: var(--accent-light); border-color: rgba(99,102,241,.2); }
+
+    .assess-text { font-size: 14px; color: rgba(232,234,240,.8); line-height: 1.65; }
+    .issue-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .issue-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 13px;
+      color: rgba(232,234,240,.75);
+      line-height: 1.55;
+    }
+    .issue-item::before { content: '→'; color: var(--accent-light); flex-shrink: 0; font-size: 11px; margin-top: 2px; }
+    .priority-fix {
+      background: rgba(251,191,36,.06);
+      border: 1px solid rgba(251,191,36,.18);
+      border-radius: 8px;
+      padding: 13px 16px;
+    }
+    .priority-fix-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--yellow); margin-bottom: 6px; }
+    .priority-fix-text { font-size: 13px; color: rgba(232,234,240,.85); line-height: 1.6; }
+
+    .platform-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .platform-row:last-child { border-bottom: none; }
+    .platform-name { font-size: 13px; font-weight: 600; color: var(--text); min-width: 100px; flex-shrink: 0; padding-top: 1px; }
+    .platform-reason { font-size: 13px; color: rgba(232,234,240,.65); flex: 1; line-height: 1.55; }
+
+    .step-card {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .step-card:last-child { border-bottom: none; }
+    .step-num {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: rgba(99,102,241,.12);
+      border: 1px solid rgba(99,102,241,.25);
+      color: var(--accent-light);
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-action { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+    .step-details { font-size: 13px; color: rgba(232,234,240,.7); line-height: 1.6; margin-bottom: 8px; }
+    .step-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .step-badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+    .badge-impact-High { background: rgba(52,211,153,.1); color: var(--green); border: 1px solid rgba(52,211,153,.2); }
+    .badge-impact-Medium { background: rgba(251,191,36,.1); color: var(--yellow); border: 1px solid rgba(251,191,36,.2); }
+    .badge-impact-Low { background: rgba(124,128,150,.1); color: var(--muted); border: 1px solid rgba(124,128,150,.2); }
+    .badge-cost { background: rgba(99,102,241,.1); color: var(--accent-light); border: 1px solid rgba(99,102,241,.2); }
+    .badge-time { background: rgba(255,255,255,.05); color: var(--muted); border: 1px solid var(--border); }
+
+    .encouragement-box {
+      background: rgba(99,102,241,.06);
+      border: 1px solid rgba(99,102,241,.18);
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-size: 14px;
+      color: rgba(232,234,240,.85);
+      line-height: 1.65;
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    .restart-btn {
+      display: block;
+      margin: 32px auto 0;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-family: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    .restart-btn:hover { border-color: var(--muted); color: var(--text); }
+
+    .seo-row { font-size: 13px; color: rgba(232,234,240,.75); line-height: 1.6; }
+    .seo-row + .seo-row { margin-top: 10px; }
+    .seo-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    footer a { color: var(--accent-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 520px) {
+      .form-row { flex-direction: column; }
+      .result-header { flex-direction: column-reverse; }
+      .grade-badge { width: 52px; height: 52px; font-size: 26px; }
+      .step-card { grid-template-columns: 30px 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-dot"></div>
+  <div class="logo-text">Digital Health Check</div>
+  <div class="logo-sub">Free &amp; Open Source</div>
+</header>
+
+<!-- HERO + FORM -->
+<div id="form-view">
+  <div class="hero">
+    <div class="hero-tag">Free — No Signup Required</div>
+    <h1>How's your <span>digital presence</span>?</h1>
+    <p class="hero-sub">
+      Get an honest, actionable audit of your organization's online presence in about 30 seconds. Built for nonprofits, small businesses, and community organizations who can't afford an agency.
+    </p>
+  </div>
+
+  <div class="form-card">
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label" for="orgName">Organization Name</label>
+          <input type="text" id="orgName" class="form-input" placeholder="e.g. Green Valley Food Pantry" maxlength="120" />
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="orgCity">City &amp; State</label>
+          <input type="text" id="orgCity" class="form-input" placeholder="e.g. Burlington, VT" maxlength="80" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="orgType">Organization Type</label>
+        <select id="orgType" class="form-select">
+          <option value="small business">Small Business</option>
+          <option value="nonprofit">Nonprofit Organization</option>
+          <option value="community organization">Community Organization</option>
+          <option value="restaurant or cafe">Restaurant / Café</option>
+          <option value="service business (HVAC, plumbing, landscaping, etc.)">Service Business (HVAC, Plumbing, Landscaping…)</option>
+          <option value="retail shop">Retail Shop</option>
+          <option value="health or wellness practice">Health / Wellness Practice</option>
+          <option value="church or faith organization">Church / Faith Organization</option>
+          <option value="arts or cultural organization">Arts / Cultural Organization</option>
+          <option value="school or educational program">School / Educational Program</option>
+        </select>
+      </div>
+      <div class="form-error" id="formError"></div>
+      <button class="submit-btn" id="submitBtn" onclick="runAudit()">Run Free Audit →</button>
+      <div class="form-note">No account needed. Nothing is saved or stored.</div>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="loading" id="loadingView">
+  <div class="spinner"></div>
+  <div class="loading-text">Analyzing your digital presence…</div>
+  <div class="loading-sub">Usually takes about 20–30 seconds.</div>
+</div>
+
+<!-- RESULTS -->
+<div id="results">
+  <div id="resultsInner"></div>
+  <button class="restart-btn" onclick="restart()">← Run another audit</button>
+</div>
+
+<footer>
+  Free and open source — <a href="https://github.com/colbysmith/community-digital-health-check" target="_blank">view on GitHub</a> · Built by <a href="https://morethanmomentum.com" target="_blank">More Than Momentum</a>
+</footer>
+
+<script>
+  // Update this to your deployed Worker URL
+  const WORKER_URL = 'https://digital-health-check.YOUR_SUBDOMAIN.workers.dev';
+
+  function show(id) { document.getElementById(id).style.display = 'block'; }
+  function hide(id) { document.getElementById(id).style.display = 'none'; }
+
+  function setLoading(on) {
+    const formView = document.getElementById('form-view');
+    const loadingView = document.getElementById('loadingView');
+    const btn = document.getElementById('submitBtn');
+    if (on) {
+      formView.style.display = 'none';
+      loadingView.classList.add('show');
+      btn.disabled = true;
+    } else {
+      loadingView.classList.remove('show');
+      btn.disabled = false;
+    }
+  }
+
+  async function runAudit() {
+    const name = document.getElementById('orgName').value.trim();
+    const city = document.getElementById('orgCity').value.trim();
+    const type = document.getElementById('orgType').value;
+    const errEl = document.getElementById('formError');
+
+    errEl.classList.remove('show');
+
+    if (!name || !city) {
+      errEl.textContent = 'Please enter your organization name and city.';
+      errEl.classList.add('show');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${WORKER_URL}/audit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, city, type }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        throw new Error(data.error || `Request failed (${res.status})`);
+      }
+
+      renderResults(data);
+    } catch (e) {
+      setLoading(false);
+      document.getElementById('form-view').style.display = 'block';
+      errEl.textContent = e.message || 'Something went wrong. Please try again.';
+      errEl.classList.add('show');
+    }
+  }
+
+  function gradeClass(grade) {
+    return `grade-${(grade || 'C').replace(/[^A-F]/g, 'C')}`;
+  }
+
+  function impactClass(impact) {
+    return `badge-impact-${impact || 'Medium'}`;
+  }
+
+  function renderResults(data) {
+    setLoading(false);
+
+    const el = document.getElementById('resultsInner');
+
+    let html = `
+      <div class="result-header">
+        <div>
+          <div class="result-org">${esc(data.organization)}</div>
+          <div class="result-city">${esc(data.city)} · ${esc(data.type)}</div>
+          <div class="result-summary">${esc(data.grade_summary)}</div>
+        </div>
+        <div class="grade-badge ${gradeClass(data.overall_grade)}">${esc(data.overall_grade)}</div>
+      </div>
+    `;
+
+    // Quick wins
+    if (data.quick_wins?.length) {
+      html += `<div class="section">
+        <div class="section-head"><span class="section-icon">⚡</span><span class="section-title">Quick Wins — Do These First</span></div>
+        <div class="section-body">`;
+      for (const w of data.quick_wins) {
+        html += `<div class="win-card">
+          <div class="win-action">${esc(w.action)}</div>
+          <div class="win-why">${esc(w.why)}</div>
+          <div class="win-meta">
+            <span class="win-pill">${esc(w.cost)}</span>
+            <span class="win-pill time">⏱ ${esc(w.time)}</span>
+          </div>
+        </div>`;
+      }
+      html += `</div></div>`;
+    }
+
+    // Website
+    if (data.website) {
+      html += `<div class="section">
+        <div class="section-head"><span class="section-icon">🌐</span><span class="section-title">Website</span></div>
+        <div class="section-body">
+          <div class="assess-text">${esc(data.website.assessment)}</div>`;
+      if (data.website.key_issues?.length || data.website.missing_elements?.length) {
+        html += `<div class="issue-list">`;
+        for (const i of [...(data.website.key_issues || []), ...(data.website.missing_elements || [])]) {
+          html += `<div class="issue-item">${esc(i)}</div>`;
+        }
+        html += `</div>`;
+      }
+      if (data.website.priority_fix) {
+        html += `<div class="priority-fix">
+          <div class="priority-fix-label">🎯 Top Priority</div>
+          <div class="priority-fix-text">${esc(data.website.priority_fix)}</div>
+        </div>`;
+      }
+      html += `</div></div>`;
+    }
+
+    // Social
+    if (data.social_media) {
+      html += `<div class="section">
+        <div class="section-head"><span class="section-icon">📱</span><span class="section-title">Social Media</span></div>
+        <div class="section-body">
+          <div class="assess-text">${esc(data.social_media.assessment)}</div>`;
+      if (data.social_media.platforms_to_prioritize?.length) {
+        html += `<div style="margin-top:4px;">`;
+        for (const p of data.social_media.platforms_to_prioritize) {
+          html += `<div class="platform-row">
+            <div class="platform-name">${esc(p.platform)}</div>
+            <div class="platform-reason">${esc(p.reason)}</div>
+          </div>`;
+        }
+        html += `</div>`;
+      }
+      if (data.social_media.what_to_post) {
+        html += `<div class="assess-text" style="border-top:1px solid var(--border);padding-top:14px;"><strong style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;">What to Post</strong>${esc(data.social_media.what_to_post)}</div>`;
+      }
+      html += `</div></div>`;
+    }
+
+    // SEO
+    if (data.local_seo) {
+      html += `<div class="section">
+        <div class="section-head"><span class="section-icon">🔍</span><span class="section-title">Local SEO &amp; Google Visibility</span></div>
+        <div class="section-body">
+          <div class="assess-text">${esc(data.local_seo.assessment)}</div>`;
+      if (data.local_seo.search_visibility_gap) {
+        html += `<div class="seo-row"><div class="seo-label">Biggest Gap</div>${esc(data.local_seo.search_visibility_gap)}</div>`;
+      }
+      if (data.local_seo.google_business_tips?.length) {
+        html += `<div class="issue-list">`;
+        for (const tip of data.local_seo.google_business_tips) {
+          html += `<div class="issue-item">${esc(tip)}</div>`;
+        }
+        html += `</div>`;
+      }
+      html += `</div></div>`;
+    }
+
+    // Recommended steps
+    if (data.recommended_steps?.length) {
+      html += `<div class="section">
+        <div class="section-head"><span class="section-icon">📋</span><span class="section-title">Your Action Plan</span></div>
+        <div class="section-body" style="gap:0;">`;
+      for (const s of data.recommended_steps) {
+        html += `<div class="step-card">
+          <div class="step-num">${s.step}</div>
+          <div>
+            <div class="step-action">${esc(s.action)}</div>
+            <div class="step-details">${esc(s.details)}</div>
+            <div class="step-meta">
+              <span class="step-badge ${impactClass(s.impact)}">${esc(s.impact)} Impact</span>
+              <span class="step-badge badge-cost">${esc(s.cost)}</span>
+              <span class="step-badge badge-time">⏱ ${esc(s.time_to_complete)}</span>
+            </div>
+          </div>
+        </div>`;
+      }
+      html += `</div></div>`;
+    }
+
+    // Encouragement
+    if (data.encouragement) {
+      html += `<div class="encouragement-box">"${esc(data.encouragement)}"</div>`;
+    }
+
+    el.innerHTML = html;
+    document.getElementById('results').classList.add('show');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function esc(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function restart() {
+    document.getElementById('results').classList.remove('show');
+    document.getElementById('resultsInner').innerHTML = '';
+    document.getElementById('form-view').style.display = 'block';
+    document.getElementById('form-view').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Allow Enter key to submit
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && document.getElementById('form-view').style.display !== 'none') {
+      runAudit();
+    }
+  });
+</script>
+</body>
+</html>
