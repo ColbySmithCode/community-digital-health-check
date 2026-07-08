@@ -8,7 +8,7 @@ Getting an honest assessment of your organization's online presence normally cos
 
 Enter your organization's name and city. In about 30 seconds, you get a prioritized action plan: what's working, what's broken, what to fix first (for free), and what to invest in when you have resources.
 
-**Try it → [digital-health-check.pages.dev](https://digital-health-check.pages.dev)**
+**Try it → [community-digital-health-check.pages.dev](https://community-digital-health-check.pages.dev)**
 
 ---
 
